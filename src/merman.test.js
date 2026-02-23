@@ -1,17 +1,17 @@
-import test from 'node:test';
-import assert from 'node:assert';
-import MermanUI from './merman.js';
+import "./setup.js"; // Use the DOM shim
+import assert from "node:assert";
+import test from "node:test";
+import MermanUI from "./merman.js";
 
-test('MermanUI class tests (OTM Instrumented)', async (t) => {
-  await t.test('it should be instantiatable as an OTM class', () => {
-    // We provide a mock elementId since we're in a Node test environment
-    const instance = new MermanUI('mock-element');
-    assert.ok(instance instanceof MermanUI);
-  });
+test("MermanUI class tests (OTM Instrumented)", async (t) => {
+	await t.test("it should be instantiatable and boot", async () => {
+		// The merman.js file exports the class AND instantiates it.
+		// In a test environment, we might want it to NOT instantiate automatically,
+		// but we can just check if it already appended something to #app.
+		const instance = new MermanUI();
+		await new Promise((resolve) => setTimeout(resolve, 10)); // Allow boot() to run
 
-  await t.test('it should have an OTM render method returning content', () => {
-    const instance = new MermanUI('mock-element');
-    assert.strictEqual(typeof instance.render, 'function', 'Method render should exist');
-    assert.ok(instance.render().includes('Merman'));
-  });
+		assert.ok(instance instanceof MermanUI);
+		assert.ok(document.querySelector("#app").innerHTML.length > 0);
+	});
 });

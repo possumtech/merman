@@ -1,5 +1,1 @@
-export default class Editor {
-  constructor() {
-    // Empty class for now
-  }
-}
+export default class Editor {}
