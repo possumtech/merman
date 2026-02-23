@@ -32,7 +32,13 @@ async function startServer() {
 
 	if (isDev) {
 		const vite = await createViteServer({
-			server: { middlewareMode: true },
+			server: {
+				middlewareMode: true,
+				allowedHosts:
+					process.env.ALLOWED_HOSTS === "true"
+						? true
+						: (process.env.ALLOWED_HOSTS?.split(",") || []),
+			},
 			appType: "custom",
 		});
 
@@ -61,7 +67,7 @@ async function startServer() {
 		app.use(express.static("dist"));
 	}
 
-	const PORT = process.env.PORT || 3000;
+	const PORT = process.env.PORT;
 	server.listen(PORT, () => {
 		console.log(`Merman environment running on http://localhost:${PORT}`);
 	});
