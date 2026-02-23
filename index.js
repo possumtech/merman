@@ -31,15 +31,28 @@ async function startServer() {
 	app.get("/api/health", (req, res) => res.json({ status: "ok" }));
 
 	if (isDev) {
+		const allowedHosts =
+			process.env.ALLOWED_HOSTS === "true"
+				? true
+				: process.env.ALLOWED_HOSTS
+					? process.env.ALLOWED_HOSTS.split(",")
+					: [];
+		console.log(`Vite allowedHosts: ${JSON.stringify(allowedHosts)}`);
+
 		const vite = await createViteServer({
+			configFile: false,
 			server: {
 				middlewareMode: true,
-				allowedHosts:
-					process.env.ALLOWED_HOSTS === "true"
-						? true
-						: (process.env.ALLOWED_HOSTS?.split(",") || []),
+				host: true,
+				allowedHosts: allowedHosts === "true" ? true : allowedHosts,
 			},
 			appType: "custom",
+		});
+
+		// 0. Debug Middleware
+		app.use((req, res, next) => {
+			console.log(`[DEBUG] ${req.method} ${req.url} | Host: ${req.headers.host}`);
+			next();
 		});
 
 		// 1. Vite middlewares handle JS/CSS/Assets
@@ -48,6 +61,7 @@ async function startServer() {
 		// 2. ONLY serve index.html for non-asset requests (Navigation Fallback)
 		app.use("*", async (req, res, next) => {
 			const url = req.originalUrl;
+			console.log(`Request for ${url} from Host: ${req.headers.host}`);
 
 			// Ignore asset-like paths that Vite should have caught but didn't
 			if (url.includes(".") && !url.endsWith(".html")) {
