@@ -1,39 +1,39 @@
-import { on, the, $, $$ } from 'on_the_money.js';
+import { $, $$, on, the } from "on_the_money.js";
 
 export default class MermanUI {
-  constructor() {
-    this.boot();
-  }
+	constructor() {
+		this.boot();
+	}
 
-  async boot() {
-    // Wait for OTM Handshake (i18n + state)
-    await the.ready;
-    
-    // Set initial global state
-    the('title', 'Merman Markdown Editor');
-    the('status', 'Online');
+	async boot() {
+		// Wait for OTM Handshake (i18n + state)
+		await the.ready;
 
-    // Clone and append editor template
-    const editor = $.clone('#tmp-editor');
-    const container = $('#app');
-    if (container) {
-      container.appendChild(editor);
+		// Set initial global state
+		the("title", "Merman Markdown Editor");
+		the("status", "Online");
 
-      // Set scoped state for the editor
-      the(editor, {
-        content: 'graph TD\nA --> B'
-      });
-    }
+		// Clone and append editor template
+		const editor = $.clone("#tmp-editor");
+		const container = $("#app");
+		if (container) {
+			container.appendChild(editor);
 
-    // Handle events
-    on(document.body, 'click', '[data-action="toggle-mode"]', (e) => {
-      const currentMode = the('viewMode') || 'edit';
-      const nextMode = currentMode === 'edit' ? 'view' : 'edit';
-      the('viewMode', nextMode);
-      the('status', `Mode: ${nextMode}`);
-      console.log(`Toggled to ${nextMode}`);
-    });
-  }
+			// Set scoped state for the editor
+			the(editor, {
+				content: "graph TD\nA --> B",
+			});
+		}
+
+		// Handle events
+		on(document.body, "click", '[data-action="toggle-mode"]', (e) => {
+			const currentMode = the("viewMode") || "edit";
+			const nextMode = currentMode === "edit" ? "view" : "edit";
+			the("viewMode", nextMode);
+			the("status", `Mode: ${nextMode}`);
+			console.log(`Toggled to ${nextMode}`);
+		});
+	}
 }
 
 // Global instantiation
