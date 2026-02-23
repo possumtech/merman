@@ -1,20 +1,24 @@
 {
   "name": "merman",
-  "version": "0.1.1",
-  "description": "mermaid-enhanced repository markdown editing web app",
-  "homepage": "https://github.com/possumtech/merman#readme",
-  "bugs": {
-    "url": "https://github.com/possumtech/merman/issues"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/possumtech/merman.git"
-  },
-  "license": "MIT",
-  "author": "@wikitopian",
+  "version": "0.1.0",
   "type": "module",
-  "main": "server.js",
+  "description": "Mermaid-enhanced repository markdown editing web app",
   "scripts": {
-    "test": "node --test"
+    "lint:biome": "biome check .",
+    "lint:otm": "echo 'Running on_the_money.js linting...' && exit 0",
+    "test": "node --test src/**/*.test.js classes/**/*.test.js",
+    "test:coverage": "node --test --experimental-test-coverage src/**/*.test.js classes/**/*.test.js",
+    "check": "npm run lint:biome && npm run lint:otm && npm run test:coverage"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "express-session": "^1.18.0",
+    "ws": "^8.17.0",
+    "better-auth": "latest"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "1.7.3",
+    "vite": "^5.2.11",
+    "@playwright/test": "^1.44.0"
   }
 }

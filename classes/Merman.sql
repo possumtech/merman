@@ -1,0 +1,3 @@
+-- SQL for Merman class
+-- Placeholder for SqlRite prepared statements
+-- e.g., SELECT * FROM revisions WHERE project_id = ?;
