@@ -5,7 +5,7 @@
   "description": "Mermaid-enhanced repository markdown editing web app",
   "scripts": {
     "lint:biome": "biome check .",
-    "lint:otm": "echo 'Running on_the_money.js linting...' && exit 0",
+    "lint:otm": "otm-lint .",
     "test": "node --test src/**/*.test.js classes/**/*.test.js",
     "test:coverage": "node --test --experimental-test-coverage src/**/*.test.js classes/**/*.test.js",
     "check": "npm run lint:biome && npm run lint:otm && npm run test:coverage"
@@ -14,7 +14,9 @@
     "express": "^4.19.2",
     "express-session": "^1.18.0",
     "ws": "^8.17.0",
-    "better-auth": "latest"
+    "better-auth": "latest",
+    "sqlrite": "https://github.com/possumtech/sqlrite",
+    "on_the_money": "https://github.com/possumtech/on_the_money.js"
   },
   "devDependencies": {
     "@biomejs/biome": "1.7.3",
