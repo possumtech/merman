@@ -20,6 +20,7 @@
 		"better-auth": "latest",
 		"express": "^4.19.2",
 		"express-session": "^1.18.0",
+		"on_the_money": "github:possumtech/on_the_money.js",
 		"on_the_money.js": "git+https://github.com/possumtech/on_the_money.js.git",
 		"ws": "^8.17.0"
 	},
