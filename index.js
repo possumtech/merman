@@ -51,7 +51,9 @@ async function startServer() {
 
 		// 0. Debug Middleware
 		app.use((req, res, next) => {
-			console.log(`[DEBUG] ${req.method} ${req.url} | Host: ${req.headers.host}`);
+			console.log(
+				`[DEBUG] ${req.method} ${req.url} | Host: ${req.headers.host}`,
+			);
 			next();
 		});
 
@@ -83,7 +85,8 @@ async function startServer() {
 					console.log(`[ASSEMBLY] Injected ${src} (${injected.length} bytes)`);
 					return injected;
 				});
-				if (includesCount > 0) console.log(`[ASSEMBLY] Total sections injected: ${includesCount}`);
+				if (includesCount > 0)
+					console.log(`[ASSEMBLY] Total sections injected: ${includesCount}`);
 
 				template = await vite.transformIndexHtml(url, template);
 				res.status(200).set({ "Content-Type": "text/html" }).end(template);
