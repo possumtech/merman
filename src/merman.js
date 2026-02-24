@@ -9,26 +9,24 @@ export default class MermanUI {
 		// Wait for OTM Handshake (i18n + state)
 		await the.ready;
 
-		// Set initial global state
 		the("title", "Merman Markdown Editor");
 		the("status", "Online");
 
-		// Clone and append editor template
 		const editor = $.clone("#tmp-editor");
 		const container = $("#app");
-		if (container) {
+		if (container && editor) {
 			container.appendChild(editor);
-
-			// Set scoped state for the editor
 			the(editor, {
 				content: "graph TD\nA --> B",
 			});
 		}
 
-		// Handle events
 		on(document.body, "click", '[data-action="toggle-mode"]', (e) => {
-			const currentMode = the("viewMode") || "edit";
+			console.log("Toggle button clicked");
+			// In OTM, global state is accessed via the('key')
+			const currentMode = localStorage.getItem('viewMode') || 'edit';
 			const nextMode = currentMode === "edit" ? "view" : "edit";
+			
 			the("viewMode", nextMode);
 			the("status", `Mode: ${nextMode}`);
 			console.log(`Toggled to ${nextMode}`);
@@ -36,5 +34,4 @@ export default class MermanUI {
 	}
 }
 
-// Global instantiation
 new MermanUI();
