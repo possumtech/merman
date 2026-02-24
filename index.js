@@ -70,6 +70,21 @@ async function startServer() {
 
 			try {
 				let template = fs.readFileSync(path.resolve("./index.html"), "utf-8");
+
+				// Merman HTML Assembly (Static Inclusion)
+				const includeRegex = /<merman-include src="(.+?)"><\/merman-include>/g;
+				let includesCount = 0;
+				template = template.replace(includeRegex, (_match, src) => {
+					includesCount++;
+					const filePath = path.resolve(src);
+					const content = fs.readFileSync(filePath, "utf-8");
+					const bodyMatch = /<body.*?>([\s\S]*?)<\/body>/i.exec(content);
+					const injected = bodyMatch ? bodyMatch[1] : content;
+					console.log(`[ASSEMBLY] Injected ${src} (${injected.length} bytes)`);
+					return injected;
+				});
+				if (includesCount > 0) console.log(`[ASSEMBLY] Total sections injected: ${includesCount}`);
+
 				template = await vite.transformIndexHtml(url, template);
 				res.status(200).set({ "Content-Type": "text/html" }).end(template);
 			} catch (e) {

@@ -1,7 +1,6 @@
 {
-	"app-title": "Merman",
-	"brand": "Merman",
-	"initializing": "Initializing...",
-	"loading": "Loading...",
-	"toggle-view": "Toggle View"
+  "app-title": "Merman Markdown Editor",
+  "brand": "Merman",
+  "initializing": "Connecting...",
+  "toggle-view": "Toggle View Mode"
 }
