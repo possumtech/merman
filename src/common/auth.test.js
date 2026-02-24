@@ -15,5 +15,6 @@ test("Auth class tests", async (t) => {
 			"function",
 			"Method authenticate should exist",
 		);
+		assert.throws(() => instance.authenticate(), /unimplemented/);
 	});
 });

@@ -10,8 +10,8 @@
 		"preview": "npm run start",
 		"lint:biome": "biome check .",
 		"lint:otm": "otm-lint --check src",
-		"test": "node --test --env-file-if-exists=.env src/**/*.test.js classes/**/*.test.js",
-		"test:coverage": "node --test --experimental-test-coverage --env-file-if-exists=.env src/**/*.test.js classes/**/*.test.js",
+		"test": "node --test --env-file-if-exists=.env 'src/**/!(*.e2e).test.js' 'classes/**/*.test.js'",
+		"test:coverage": "node --test --experimental-test-coverage --test-coverage-lines=80 --test-coverage-branches=80 --test-coverage-functions=100 --test-coverage-exclude='**/*.test.js' --test-coverage-exclude='src/setup.js' --env-file-if-exists=.env 'src/**/!(*.e2e).test.js' 'classes/**/*.test.js'",
 		"check": "npm run lint:biome && npm run lint:otm && npm run test:coverage"
 	},
 	"dependencies": {

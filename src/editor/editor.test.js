@@ -15,5 +15,6 @@ test("Editor class tests", async (t) => {
 			"function",
 			"Method toggleMode should exist",
 		);
+		assert.throws(() => instance.toggleMode(), /unimplemented/);
 	});
 });
