@@ -12,7 +12,18 @@ const isDev = process.env.NODE_ENV !== "production";
 async function startServer() {
 	const app = express();
 	const server = createServer(app);
-	const wss = new WebSocketServer({ server });
+	const wss = new WebSocketServer({ noServer: true });
+
+	server.on("upgrade", (request, socket, head) => {
+		const pathname = new URL(request.url, `http://${request.headers.host}`)
+			.pathname;
+
+		if (pathname === "/ws") {
+			wss.handleUpgrade(request, socket, head, (ws) => {
+				wss.emit("connection", ws, request);
+			});
+		}
+	});
 
 	const merman = new Merman("merman.sqlite3");
 
@@ -44,6 +55,9 @@ async function startServer() {
 			server: {
 				middlewareMode: true,
 				host: true,
+				hmr: {
+					server,
+				},
 				allowedHosts: allowedHosts === "true" ? true : allowedHosts,
 			},
 			appType: "custom",
